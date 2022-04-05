@@ -86,8 +86,7 @@ public class ProductDAO {
 				sql += " where PROD_NO LIKE '%"+ search.getSearchKeyword()
 						+ "%'";
 			} else if (search.getSearchCondition().equals("2")) {
-				sql += " where PROD_NAME LIKE '%" + search.getSearchKeyword()
-						+ "%'";
+				sql += " where PROD_NAME LIKE '%" + search.getSearchKeyword()+ "%'";
 			}else if (search.getSearchCondition().equals("3")) {
 				sql += " where PRICE ='" + search.getSearchKeyword()
 				+ "'";
