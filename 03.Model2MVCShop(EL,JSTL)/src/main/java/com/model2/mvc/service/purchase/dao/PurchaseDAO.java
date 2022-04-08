@@ -238,7 +238,7 @@ public class PurchaseDAO {
 		Connection con = DBUtil.getConnection();
 
 
-		String sql = "UPDATE TRANSACTION SET PROD_NO=?, BUYER_ID=?,PAYMENT_OPTION=?, RECEIVER_NAME=?, RECEIVER_PHONE=?,DEMAILADDR=?,DLVY_REQUEST=?,TRAN_STATUS_CODE=?, DLVY_DATE=? WHERE TRAN_NO=?";
+		String sql = "UPDATE TRANSACTION SET PROD_NO=?, BUYER_ID=?,PAYMENT_OPTION=?, RECEIVER_NAME=?, RECEIVER_PHONE=?,DEMAILADDR=?,DLVY_REQUEST=?,TRAN_STATUS_CODE=?, DLVY_DATE= TO_DATE( ?,'YYYY-MM-DD HH:mi:ss')  WHERE TRAN_NO=?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		
@@ -251,11 +251,8 @@ public class PurchaseDAO {
 		stmt.setString(7, purchase.getDivyRequest());
 		stmt.setString(8, purchase.getTranCode());
 		String form = purchase.getDivyDate();
-		System.out.println(form);
-		
-		//SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
-		//Date to =transFormat.parse(form);
-		stmt.setString(9, purchase.getDivyDate());
+
+		stmt.setString(9, form );
 		stmt.setInt(10, purchase.getTranNo());
 		stmt.executeUpdate();
 		
@@ -265,15 +262,14 @@ public class PurchaseDAO {
 	public void updateTranCode(Purchase purchase) throws Exception {
 		Connection con = DBUtil.getConnection();
 
-		String sql = "update TRANSACTION set TRAN_STATUS_CODE=? where PROD_NO=?";
+		String sql = "update TRANSACTION set TRAN_STATUS_CODE=? where TRAN_NO=?";
 		
-		purchase.getPurchaseProd().getProdNo();
-		purchase.getTranCode();
+		
 		System.out.println(sql);
 		PreparedStatement stmt = con.prepareStatement(sql);
 		
 		stmt.setString(1, purchase.getTranCode());
-		stmt.setInt(2, purchase.getPurchaseProd().getProdNo());
+		stmt.setInt(2, purchase.getTranNo());
 
 
 		stmt.executeUpdate();

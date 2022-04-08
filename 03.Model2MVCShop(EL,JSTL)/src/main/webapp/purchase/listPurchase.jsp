@@ -121,12 +121,12 @@ function fncGetUserList(currentPage) {
 		
 				<c:if test="${list.tranCode=='1' }">
 					<c:if test="${user.role=='admin'}">
-						구매완료 <a href="/updateTranCode.do?prodNo=${list.purchaseProd.prodNo}&tranCode=2">배송하기</a>	
+						구매완료 <a href="/updateTranCode.do?tranNo=${list.tranNo }&tranCode=2">배송하기</a>	
 					</c:if>
 				</c:if>	
 				<c:if test="${list.tranCode=='2' }">
 					<c:if test="${user.userId == list.buyer.userId }">
-					<a href="/updateTranCode.do?prodNo=${list.purchaseProd.prodNo}&tranCode=3">물건도착</a>
+					<a href="/updateTranCode.do?tranNo=${list.tranNo }&tranCode=3">물건도착</a>
 					</c:if>	
 				</c:if>				
 				<c:if test="${list.tranCode=='3' }">

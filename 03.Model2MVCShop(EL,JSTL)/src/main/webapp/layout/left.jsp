@@ -101,6 +101,13 @@ function history(){
 					<a href="javascript:history()">최근 본 상품</a>
 				</td>
 			</tr>
+			<c:if test="${!empty user}">
+			<tr>
+				<td class="Depth03">
+					<a href="/getShoppingList.do?userId=${user.userId} %>" target="rightFrame">장바구니</a>
+				</td>
+			</tr>
+			</c:if>			
 		</table>
 	</td>
 </tr>

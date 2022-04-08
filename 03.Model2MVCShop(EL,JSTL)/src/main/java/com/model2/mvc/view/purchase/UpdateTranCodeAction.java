@@ -10,6 +10,8 @@ import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
+import com.model2.mvc.service.user.UserService;
+import com.model2.mvc.service.user.impl.UserServiceImpl;
 
 
 
@@ -18,12 +20,11 @@ public class UpdateTranCodeAction extends Action {
 	@Override
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
-		System.out.println("업데이트 트랜코드"+request.getParameter("prodNo"));
-		ProductService prodService = new ProductServiceImpl();
-		Purchase purchaseVO=new Purchase();
-		purchaseVO.setPurchaseProd(prodService.getProduct(Integer.parseInt(request.getParameter("prodNo"))));
-		purchaseVO.setTranCode(request.getParameter("tranCode"));
 		
+		
+		Purchase purchaseVO=new Purchase();
+		purchaseVO.setTranNo(Integer.parseInt(request.getParameter("tranNo")));
+		purchaseVO.setTranCode(request.getParameter("tranCode"));
 		System.out.println(request.getParameter("tranCode"));
 		
 		

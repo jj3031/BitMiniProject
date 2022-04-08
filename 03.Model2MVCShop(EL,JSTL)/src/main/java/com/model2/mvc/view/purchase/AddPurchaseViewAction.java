@@ -14,7 +14,7 @@ import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
 import com.model2.mvc.service.user.UserService;
 import com.model2.mvc.service.user.impl.UserServiceImpl;
-import com.model2.mvc.service.user.vo.UserVO;
+
 
 public class AddPurchaseViewAction extends Action {
 
