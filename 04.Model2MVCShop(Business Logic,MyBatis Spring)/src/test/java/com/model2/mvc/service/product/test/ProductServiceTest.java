@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
-import com.model2.mvc.service.domain.User;
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.user.UserService;
 
@@ -39,35 +39,8 @@ public class ProductServiceTest {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-	//@Test
-	public void testAddUser() throws Exception {
 		
-		User user = new User();
-		user.setUserId("testUserId");
-		user.setUserName("testUserName");
-		user.setPassword("testPasswd");
-		user.setSsn("1111112222222");
-		user.setPhone("111-2222-3333");
-		user.setAddr("경기도");
-		user.setEmail("test@test.com");
-		
-		userService.addUser(user);
-		
-		user = userService.getUser("testUserId");
-
-		//==> console 확인
-		//System.out.println(user);
-		
-		//==> API 확인
-		Assert.assertEquals("testUserId", user.getUserId());
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("testPasswd", user.getPassword());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("경기도", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
-	}	
-	
-	//@Test
+	@Test
 	public void testAddProduct() throws Exception {
 		
 		Product product = new Product();
@@ -76,6 +49,7 @@ public class ProductServiceTest {
 		product.setProdName("아이폰20");
 		product.setQuantity(20);
 		product.setProdDetail("제발좀되라");
+		product.setPrice(1000000);
 		
 		
 		productService.addProduct(product);
@@ -90,95 +64,32 @@ public class ProductServiceTest {
 		
 	}
 	
-//	//@Test
-//	public void testGetUser() throws Exception {
-//		
-//		User user = new User();
-//		//==> 필요하다면...
-////		user.setUserId("testUserId");
-////		user.setUserName("testUserName");
-////		user.setPassword("testPasswd");
-////		user.setSsn("1111112222222");
-////		user.setPhone("111-2222-3333");
-////		user.setAddr("경기도");
-////		user.setEmail("test@test.com");
-//		
-//		user = userService.getUser("testUserId");
-//
-//		//==> console 확인
-//		//System.out.println(user);
-//		
-//		//==> API 확인
-//		Assert.assertEquals("testUserId", user.getUserId());
-//		Assert.assertEquals("testUserName", user.getUserName());
-//		Assert.assertEquals("testPasswd", user.getPassword());
-//		Assert.assertEquals("111-2222-3333", user.getPhone());
-//		Assert.assertEquals("경기도", user.getAddr());
-//		Assert.assertEquals("test@test.com", user.getEmail());
-//
-//		Assert.assertNotNull(userService.getUser("user02"));
-//		Assert.assertNotNull(userService.getUser("user05"));
-//	}
-//	
-//	//@Test
-//	 public void testUpdateUser() throws Exception{
-//		 
-//		User user = userService.getUser("testUserId");
-//		Assert.assertNotNull(user);
-//		
-//		Assert.assertEquals("testUserName", user.getUserName());
-//		Assert.assertEquals("111-2222-3333", user.getPhone());
-//		Assert.assertEquals("경기도", user.getAddr());
-//		Assert.assertEquals("test@test.com", user.getEmail());
-//
-//		user.setUserName("change");
-//		user.setPhone("777-7777-7777");
-//		user.setAddr("change");
-//		user.setEmail("change@change.com");
-//		
-//		userService.updateUser(user);
-//		
-//		user = userService.getUser("testUserId");
-//		Assert.assertNotNull(user);
-//		
-//		//==> console 확인
-//		//System.out.println(user);
-//			
-//		//==> API 확인
-//		Assert.assertEquals("change", user.getUserName());
-//		Assert.assertEquals("777-7777-7777", user.getPhone());
-//		Assert.assertEquals("change", user.getAddr());
-//		Assert.assertEquals("change@change.com", user.getEmail());
-//	 }
-//	 
-//	//@Test
-//	public void testCheckDuplication() throws Exception{
-//
-//		//==> 필요하다면...
-////		User user = new User();
-////		user.setUserId("testUserId");
-////		user.setUserName("testUserName");
-////		user.setPassword("testPasswd");
-////		user.setSsn("1111112222222");
-////		user.setPhone("111-2222-3333");
-////		user.setAddr("경기도");
-////		user.setEmail("test@test.com");
-////		
-////		userService.addUser(user);
-//		
-//		//==> console 확인
-//		System.out.println(userService.checkDuplication("testUserId"));
-//		System.out.println(userService.checkDuplication("testUserId"+System.currentTimeMillis()) );
-//	 	
-//		//==> API 확인
-//		Assert.assertFalse( userService.checkDuplication("testUserId") );
-//	 	Assert.assertTrue( userService.checkDuplication("testUserId"+System.currentTimeMillis()) );
-//		 	
-//	}
-//	
-//	 //==>  주석을 풀고 실행하면....
 	@Test
-	 public void testGetUserListAll() throws Exception{
+	public void testGetUser() throws Exception {
+		
+		Product product = new Product();
+		//==> 필요하다면...
+//		user.setUserId("testUserId");
+//		user.setUserName("testUserName");
+//		user.setPassword("testPasswd");
+//		user.setSsn("1111112222222");
+//		user.setPhone("111-2222-3333");
+//		user.setAddr("경기도");
+//		user.setEmail("test@test.com");
+		
+		product = productService.getProduct(10030);
+
+		//==> console 확인
+		//System.out.println(user);
+		
+		//==> API 확인
+		System.out.println(product.getRemain());
+		Assert.assertEquals(14, product.getRemain());
+
+	}
+
+	//@Test
+	 public void testGetProductListAll() throws Exception{
 		 
 	 	Search search = new Search();
 	 	search.setCurrentPage(1);

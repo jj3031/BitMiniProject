@@ -16,19 +16,20 @@
 		<result property="fileName" 			column="IMAGE_FILE" 			jdbcType="VARCHAR" />
 		<result property="regDate" 				column="REG_DATE" 				jdbcType="DATE" />
 		<result property="quantity" 			column="QUANTITY" 				jdbcType="NUMERIC"  />
+		<result property="remain" 			column="SUM" 				jdbcType="NUMERIC"  />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 		INSERT 
-	 	INTO PRODUCT(PROD_NO, PROD_NAME, PROD_DETAIL, REG_DATE, QUANTITY) 
-	 	values (seq_product_prod_no.nextval, #{prodName}, #{prodDetail}, SYSDATE , 10)
+	 	INTO PRODUCT(PROD_NO, PROD_NAME, PROD_DETAIL,PRICE,IMAGE_FILE,REG_DATE, QUANTITY) 
+	 	values (seq_product_prod_no.nextval, #{prodName}, #{prodDetail},#{price},#{fileName}, SYSDATE , #{quantity})
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
-		SELECT * 
-		FROM PRODUCT 
+		SELECT PRODUCT.*  ,  A.SUM 
+		FROM PRODUCT LEFT OUTER JOIN (SELECT PROD_NO, SUM(purchaseQt) SUM FROM TRANSACTION GROUP BY prod_no) A ON PRODUCT.PROD_NO = A.PROD_NO
 		where PRODUCT.PROD_NO = #{value}
 	 </select>
 	 
@@ -49,8 +50,8 @@
 	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT * 
-	  									FROM PRODUCT 
+	  					FROM		(	SELECT PRODUCT.*  ,  A.SUM 
+										FROM PRODUCT LEFT OUTER JOIN (SELECT PROD_NO, SUM(purchaseQt) SUM FROM TRANSACTION GROUP BY prod_no) A ON PRODUCT.PROD_NO = A.PROD_NO
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
@@ -64,7 +65,7 @@
 													</if>
 												</where>
 											</if>
-											<!-- <if test="orderCondition != null">
+											<if test="orderCondition != null">
 												<if test="orderCondition == priceAsc">
 													order by PRICE ASC
 												</if>
@@ -74,7 +75,7 @@
 												<if test="orderCondition == prodNoAsc">
 													order by PROD_NO
 												</if>
-											</if> -->
+											</if>
 											) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
@@ -93,8 +94,8 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT * 
-	  									FROM PRODUCT 
+	  	FROM(	SELECT PRODUCT.*  ,  A.SUM 
+				FROM PRODUCT LEFT OUTER JOIN (SELECT PROD_NO, SUM(purchaseQt) SUM FROM TRANSACTION GROUP BY prod_no) A ON PRODUCT.PROD_NO = A.PROD_NO
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 1 and searchKeyword !='' ">

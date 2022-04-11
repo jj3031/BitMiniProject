@@ -14,6 +14,7 @@ public class Product {
 	private Date regDate;
 	private String proTranCode;
 	private int quantity;
+	private int remain;
 	
 	public Product(){
 	}
@@ -76,6 +77,14 @@ public class Product {
 	}
 
 
+
+	public int getRemain() {
+		return remain;
+	}
+
+	public void setRemain(int remain) {
+		this.remain = remain;
+	}
 
 	// Override
 	public String toString() {
